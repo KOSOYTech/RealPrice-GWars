@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+		<title>GWars - показ реальных цен</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<script src="jquery.js"></script>
+		<script src="popup.js"></script>
+		<link type="text/css" rel="stylesheet" href="style.css">
+	</head>
+	<body style="min-width: 500px;">
+	<div id="valutavib">
+		<p id="annotval">Выберите вашу валюту и перезагрузите страницу:</p>
+		<p><input type="radio" id="rub" name="chkVal" /> Рубли</p>
+		<p><input type="radio" id="griv" name="chkVal" /> Гривны</p>
+		<p><input type="radio" id="euro" name="chkVal" /> Евро</p>
+		<p><input type="radio" id="dol" name="chkVal" /> Доллары</p>
+		<p><input type="radio" id="shek" name="chkVal" /> Шекели</p>
+	</div>
+	<div id="kurseun">
+		<p>Введите актуальный курс EUN (по умолчанию равен 130 000 гб. к 1 EUN) и перезагрузите страницу:</p>
+		<p><input type="text" id="eunkurs" placeholder="130000" /> гб. <input id="eunkurschange" type="submit" value="Изменить"/></p>
+	</div>
+	<div id="kursvalut">
+		<p>Введите актуальный курс вашей валюты по отношению к EUN (сколько стоит 1 EUN) и перезагрузите страницу:</p>
+		<p><span class="kurstitle">РУБЛИ:</span> <input type="text" id="rubeunkurs" class="valutaeunkurs" placeholder="57.20" /> <span class="kurspris">руб.</span> <input id="rubeunkurschange" class="valutaeunkurschange" type="submit" value="Изменить"/></p>
+		<p><span class="kurstitle">ГРИВНЫ:</span> <input type="text" id="griveunkurs" class="valutaeunkurs" placeholder="22.37" /> <span class="kurspris">гр.</span> <input id="griveunkurschange" class="valutaeunkurschange" type="submit" value="Изменить"/></p>
+		<p><span class="kurstitle">ЕВРО:</span> <input type="text" id="euroeunkurs" class="valutaeunkurs" placeholder="0.8" /> <span class="kurspris">евро</span> <input id="euroeunkurschange" class="valutaeunkurschange" type="submit" value="Изменить"/></p>
+		<p><span class="kurstitle">ДОЛЛАРЫ:</span> <input type="text" id="doleunkurs" class="valutaeunkurs" placeholder="0.9" /> <span class="kurspris">дол.</span> <input id="doleunkurschange" class="valutaeunkurschange" type="submit" value="Изменить"/></p>
+		<p><span class="kurstitle">ШЕКЕЛИ:</span> <input type="text" id="shekeunkurs" class="valutaeunkurs" placeholder="3.17" /> <span class="kurspris">шек.</span> <input id="shekeunkurschange" class="valutaeunkurschange" type="submit" value="Изменить"/></p>
+	</div>
+	<div>
+		<input type="checkbox" id="hd-1" class="hide"/>
+		<label for="hd-1" >Благодарности игрокам:</label>
+		<div>
+			Fatter - за первый донат</br>
+			Немножко казел - за первый донат больше 50000 гб.</br>
+			кггз - за идею о мультивалютности</br>
+			Nitro2 - за указание на погрешность курса</br>
+			ПоТРАХ - за обнаружение бага с покупкой чипов</br>
+			А также всем тем, кто поддержал идею в теме http://www.gwars.ru/messages.php?fid=27&tid=340926&page_id=0</br>
+			Искреннее спасибо
+		</div>
+	</div>
+	<p style="font-size: 9px;">От Мейера Лански с любовью</p>
+  </body>
+</html>

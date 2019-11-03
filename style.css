@@ -1,0 +1,15 @@
+/* Выбор валюты */
+#valutavib p {margin-top: -10px;}
+#valutavib #annotval {margin-top: 10px; margin-bottom: 18px;}
+
+/* Ввод курса валюты по отношению к EUN */
+#kursvalut .kurstitle {width: 65px; display: inline-block;}
+#kursvalut .kurspris {width: 30px; display: inline-block;}
+.valutaeunkurs {width: 80px;}
+
+/* Кнопка благодарности */
+.hide {display: none;}
+.hide + label ~ div {display: none;}
+.hide + label {border-bottom: 1px dotted green; padding: 0; color: green; cursor: pointer; display: inline-block;}
+.hide:checked + label {color: red;border-bottom: 0;}
+.hide:checked + label + div {display: block; background: #efefef; -moz-box-shadow: inset 3px 3px 10px #7d8e8f; -webkit-box-shadow: inset 3px 3px 10px #7d8e8f; box-shadow: inset 3px 3px 10px #7d8e8f; padding: 10px;}
