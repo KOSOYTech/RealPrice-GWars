@@ -4,6 +4,13 @@ var valutaVar;
 // Инициализируем переменную, в которой будем хранить указанный в настройках курс EUN к гб
 var eunKursVar;
 
+// Инициализируем переменные, в которых будем хранить указанные в настройках курсы валюты к EUN
+var rubKursVar;
+var grivKursVar;
+var euroKursVar;
+var dolKursVar;
+var shekKursVar;
+
 // Асинхронная функция, с которой всё начинается. Происходит получения настроек валюты и курса и затем выполняется скрипт
 // Получаем значение валюты из настроек
 chrome.storage.local.get({'valuta' : {}}, function(result){
@@ -27,20 +34,30 @@ chrome.storage.local.get({'valuta' : {}}, function(result){
 			// Устанавливаем значение курса EUN к гб по умолчанию
 			eunKursVar = 130000;						
 		}
-			
-		// После того, как мы получили и записали в переменнные настройки расширения, приступаем к выполнению функции, которая непосредственно знаимается конвертированием
-		convert();
 		
-		// Повторный запуск функции конвертирования в тех случаях, когда мы находимся на странице с картой острова и переключаемся между типами объектов недвижимости, так как происходит подгрузка информации
-		if (window.location.pathname == '/map.php') {
+		// Получаем значения курсов валют к EUN из настроек
+		chrome.storage.local.get({'rubEUNKurs' : {}, 'grivEUNKurs' : {}, 'euroEUNKurs' : {}, 'dolEUNKurs' : {}, 'shekEUNKurs' : {}}, function(result){
 			
-			// При нажатии на любое место на странице (то есть в пределах тега body) мы перезапускаем функцию конкертирования
-			$( "body" ).click(function() {
+			isFinite(result.rubEUNKurs) ? rubKursVar = result.rubEUNKurs : rubKursVar = 57.2;
+			isFinite(result.grivEUNKurs) ? grivKursVar = result.grivEUNKurs : grivKursVar = 22.37;
+			isFinite(result.euroEUNKurs) ? eurpKursVar = result.euroEUNKurs : euroKursVar = 0.8;
+			isFinite(result.dolEUNKurs) ? dolKursVar = result.dolEUNKurs : dolKursVar = 0.9;
+			isFinite(result.shekEUNKurs) ? shekKursVar = result.shekEUNKurs : shekKursVar = 3.17;
+			
+			// После того, как мы получили и записали в переменнные настройки расширения, приступаем к выполнению функции, которая непосредственно знаимается конвертированием
+			convert();
+		
+			// Повторный запуск функции конвертирования в тех случаях, когда мы находимся на странице с картой острова и переключаемся между типами объектов недвижимости, так как происходит подгрузка информации
+			if (window.location.pathname == '/map.php') {
+			
+				// При нажатии на любое место на странице (то есть в пределах тега body) мы перезапускаем функцию конкертирования
+				$( "body" ).click(function() {
 				
-				// Перезапуск функции конвертирования через 300 миллисекунд после нажатия в любое место страницы
-				setTimeout(convert, 300);
-			});
-		}
+					// Перезапуск функции конвертирования через 300 миллисекунд после нажатия в любое место страницы
+					setTimeout(convert, 300);
+				});
+			}
+		});
 	});
 });
 
@@ -49,22 +66,23 @@ function convert()
 {		
 
 	// Устанавливаем текущий курс одного EUN в рублях
-	var kursRubEUN = 59.57;
+	// var kursRubEUN = 59.57;
 	
 	// Подсчитываем основной множитель (в рублях), на который мы будем перемножать значение ГБ, разделив текущий курс одного EUN в рублях на курс EUN в ГБ, получив таким образом, чему равен 1 рубль в ГБ
-	var osnMnozRub = kursRubEUN / eunKursVar;
+	var mnozRub = rubKursVar / eunKursVar;
+
 	
 	// Подсчитываем множитель для гривен, скорректировав его на указанный курс
-	var mnozGriv = osnMnozRub / 2.66;
+	var mnozGriv = grivKursVar / eunKursVar;
 	
 	// Подсчитываем множитель для евро, скорректировав его на указанный курс
-	var mnozEuro = osnMnozRub / 73.98;
+	var mnozEuro = euroKursVar / eunKursVar;
 	
 	// Подсчитываем множитель для долларов, скорректировав его на указанный курс
-	var mnozDol = osnMnozRub / 66.46;
+	var mnozDol = dolKursVar / eunKursVar;
 	
 	// Подсчитываем множитель для шекелей, скорректировав его на указанный курс
-	var mnozShek = osnMnozRub / 18.96;;
+	var mnozShek = shekKursVar/ eunKursVar;
 	
 	// Инициализируем переменную, в которой будем хранить нужный множитель с зависимоти от выбранной валюты и присваиваем ему значение по умолчанию, равное 1 (то есть 1 рубль равен 1 гб)
 	var mnozValuta = 1;
@@ -75,7 +93,7 @@ function convert()
 	// Запускаем функцию Switch, которая установит нужные значения приставки и множителя в зависимости от выбранной валюты
 	switch (valutaVar) {
 		case 'rub':
-			mnozValuta = osnMnozRub;
+			mnozValuta = mnozRub;
 			pristavka = ' руб.';
 		break;
 		case 'griv':
@@ -95,7 +113,7 @@ function convert()
 			pristavka = ' шек.';
 		break;
 		default:
-			mnozValuta = osnMnozRub;
+			mnozValuta = mnozRub;
 			pristavka = ' руб.';
 	}
 	

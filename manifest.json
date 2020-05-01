@@ -19,5 +19,6 @@
   ],
   "permissions": [ "storage",
     "http://www.gwars.ru/*"
-  ]
+  ],
+  "short_name": "RP GWars"
 }

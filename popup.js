@@ -48,9 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Проверяем, содержит ли поле ввода курса EUN ненулевое значение (чтобы избежать надписи Infinity)
 		if (document.getElementById('eunkurs').value !== 0) {
 			
-			// 
-			var eunkurs = document.getElementById('eunkurs').value;
-			chrome.storage.local.set({'GbEUNKurs': eunkurs});
+			// Непосредственно сохраняем введённое значение курса EUN к гб в настройки
+			chrome.storage.local.set({'GbEUNKurs': document.getElementById('eunkurs').value});
 		}
     });
 	
@@ -75,26 +74,97 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Устанавливаем, что при клике на кнопку изменения курса валюты к EUN происходит сохранение курса в настройки
 		valutaEUNKursChange[i].addEventListener("click", function (vEKC) {
 			
+			// Устанавливаем, что при клике на кнопке изменить соответствующей валюты с соответствующим ID происходит сохранение соответствующего курса в настройки
 			switch (vEKC.target.id) {
 				case 'rubeunkurschange':
-					alert('Работает');
+					var rubEUNKurs = Number(document.getElementById('rubeunkurs').value);
+					if (rubEUNKurs > 0) {
+						chrome.storage.local.set({'rubEUNKurs': rubEUNKurs});
+					}
+					else {
+						alert('Вы уверены, что ввели число больше нуля? Курс не может равнняться нулю или быть отрицательным');
+					}
 				break;
 				case 'griveunkurschange':
-					alert('Работает');
+					var grivEUNKurs = Number(document.getElementById('griveunkurs').value);
+					if (grivEUNKurs > 0) {
+						chrome.storage.local.set({'grivEUNKurs': grivEUNKurs});
+					}
+					else {
+						alert('Вы уверены, что ввели число больше нуля? Курс не может равнняться нулю или быть отрицательным');
+					}
 				break;
 				case 'euroeunkurschange':
-					alert('Работает');
+					var euroEUNKurs = Number(document.getElementById('euroeunkurs').value);
+					if (euroEUNKurs > 0) {
+						chrome.storage.local.set({'euroEUNKurs': euroEUNKurs});
+					}
+					else {
+						alert('Вы уверены, что ввели число больше нуля? Курс не может равнняться нулю или быть отрицательным');
+					}
 				break;
 				case 'doleunkurschange':
-					alert('Работает');
+					var dolEUNKurs = Number(document.getElementById('doleunkurs').value);
+					if (dolEUNKurs > 0) {
+						chrome.storage.local.set({'dolEUNKurs': dolEUNKurs});
+					}
+					else {
+						alert('Вы уверены, что ввели число больше нуля? Курс не может равнняться нулю или быть отрицательным');
+					}
 				break;
 				case 'shekeunkurschange':
-					alert('Работает');
+					var shekEUNKurs = Number(document.getElementById('shekeunkurs').value);
+					if (shekEUNKurs > 0) {
+						chrome.storage.local.set({'shekEUNKurs': shekEUNKurs});
+					}
+					else {
+						alert('Вы уверены, что ввели число больше нуля? Курс не может равнняться нулю или быть отрицательным');
+					}
 				break;
 				default:
 					alert('Стряслась какая-то ошибка. Вы точно нажимаете на кнопку "Изменить"?');
 			}
 		});
+		
+		// Получаем текущее значение курса валюты к EUN из настроек, чтобы вписать его в качестве заполнителя в поле ввода курса
+		chrome.storage.local.get({'rubEUNKurs' : {}, 'grivEUNKurs' : {}, 'euroEUNKurs' : {}, 'dolEUNKurs' : {}, 'shekEUNKurs' : {}}, function(result){
+			
+			// Если мы получаем значение курса валюты, то есть числовое значение, то мы вписываем его в качестве заполнителя в поле ввода курса
+			if (isFinite(result.rubEUNKurs)) {
+				
+				// Вписываем полученный из настреок курс в качестве заполнителя в поле ввода курса
+				document.getElementById('rubeunkurs').placeholder=result.rubEUNKurs;
+			}
+				
+			// Если мы получаем значение курса валюты, то есть числовое значение, то мы вписываем его в качестве заполнителя в поле ввода курса
+			if (isFinite(result.grivEUNKurs)) {
+				
+				// Вписываем полученный из настреок курс в качестве заполнителя в поле ввода курса
+				document.getElementById('griveunkurs').placeholder=result.grivEUNKurs;
+			}
+				
+			// Если мы получаем значение курса валюты, то есть числовое значение, то мы вписываем его в качестве заполнителя в поле ввода курса
+			if (isFinite(result.euroEUNKurs)) {
+				
+				// Вписываем полученный из настреок курс в качестве заполнителя в поле ввода курса
+				document.getElementById('euroeunkurs').placeholder=result.euroEUNKurs;
+			}
+				
+			// Если мы получаем значение курса валюты, то есть числовое значение, то мы вписываем его в качестве заполнителя в поле ввода курса
+			if (isFinite(result.dolEUNKurs)) {
+				
+				// Вписываем полученный из настреок курс в качестве заполнителя в поле ввода курса
+				document.getElementById('doleunkurs').placeholder=result.dolEUNKurs;
+			}
+				
+			// Если мы получаем значение курса валюты, то есть числовое значение, то мы вписываем его в качестве заполнителя в поле ввода курса
+			if (isFinite(result.shekEUNKurs)) {
+				
+				// Вписываем полученный из настреок курс в качестве заполнителя в поле ввода курса
+				document.getElementById('shekeunkurs').placeholder=result.shekEUNKurs;
+			}
+		});
+		
 	}
 	
 });
