@@ -1,2 +1,2 @@
-# RealPrice-GWars
+# gwars-real-price
 
